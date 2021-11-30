@@ -82,13 +82,13 @@ myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
 myBorderWidth :: Dimension
-myBorderWidth = 2           -- Sets border width for windows
+myBorderWidth = 4           -- Sets border width for windows
 
 myNormColor :: String
-myNormColor   = "#282c34"   -- Border color of normal windows
+myNormColor   = "#82AAFF"   -- Border color of normal windows
 
 myFocusColor :: String
-myFocusColor  = "#46d9ff"   -- Border color of focused windows
+myFocusColor  = "#af2eff"   -- Border color of focused windows
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset

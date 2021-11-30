@@ -5,12 +5,14 @@ background_opacity: 0.75
 
 draw_bold_text_with_bright_colors: true
 
+gtk_theme_variant: true
+
 # Colors
 colors:
   # Default colors
   primary:
-    background:        '#011627'
-    foreground:        '#d726ff'
+    background:        '#00113d'
+    foreground:        '#af2eff'
     bright_foreground: '#eeeeee'
 
   # Cursor colors
@@ -174,7 +176,6 @@ mouse:
   #
   # Override the variant of the GTK theme. Commonly supported values are `dark`
   # and `light`. Set this to `None` to use the default theme variant.
-  #gtk_theme_variant: None
 
 #scrolling:
   # Maximum number of lines in the scrollback buffer.
