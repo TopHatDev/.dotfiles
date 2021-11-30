@@ -3,8 +3,8 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
-       , fgColor = "grey"
-       , alpha = 255
+       , fgColor = "#82AAFF"
+       , alpha = 165
        , position = Top
        , textOffset = -1
        , iconOffset = -1
@@ -15,10 +15,11 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+       , commands = [ Run Date "%a %b %_d %H:%M:%S" "date" 10
+                    , Run Com "sh" ["-c", "checkupdates | wc -l"] "checkupdates" 3600
                     , Run UnsafeStdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %UnsafeStdinReader%}{ <fc=#ee9a00>%date%</fc>"
+       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}{<fc=#ffffff> | </fc>%checkupdates% Updates<fc=#ffffff> | </fc><fc=#ee9a00>%date%</fc>"
        }

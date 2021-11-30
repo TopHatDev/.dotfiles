@@ -67,7 +67,7 @@ import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
 
 myFont :: String
-myFont = "xft:Ubuntu mono:size=9:antialias=true:hinting=true"
+myFont = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask        -- Sets modkey to super/windows key
@@ -76,7 +76,7 @@ myTerminal :: String
 myTerminal = "alacritty"    -- Sets default terminal
 
 myBrowser :: String
-myBrowser = "Brave"
+myBrowser = "brave "
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
@@ -97,6 +97,48 @@ myStartupHook :: X ()
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom &"
+
+myColorizer :: Window -> Bool -> X (String, String)
+myColorizer = colorRangeFromClassName
+                  (0x28,0x2c,0x34) -- lowest inactive bg
+                  (0x28,0x2c,0x34) -- highest inactive bg
+                  (0xc7,0x92,0xea) -- active bg
+                  (0xc0,0xa7,0x9a) -- inactive fg
+                  (0x28,0x2c,0x40) -- active fg
+                  
+
+-- gridSelect menu layout
+mygridConfig :: p -> GSConfig Window
+mygridConfig colorizer = (buildDefaultGSConfig myColorizer)
+    { gs_cellheight   = 40
+    , gs_cellwidth    = 200
+    , gs_cellpadding  = 6
+    , gs_originFractX = 0.5
+    , gs_originFractY = 0.5
+    , gs_font         = myFont
+    }
+
+spawnSelected' :: [(String, String)] -> X ()
+spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
+    where conf = def
+                   { gs_cellheight   = 40
+                   , gs_cellwidth    = 200
+                   , gs_cellpadding  = 6
+                   , gs_originFractX = 0.5
+                   , gs_originFractY = 0.5
+                   , gs_font         = myFont
+                   }
+
+myAppGrid = [ ("Audacity", "audacity")
+            , ("Discord", "discord")
+            , ("Brave", "brave")
+            , ("OBS", "obs")
+            , ("Steam", "steam")
+            , ("Minecraft", "minecraft-launcher")
+            , ("VScode", "code")
+            , ("Godot-3.4", "godot-3.4")
+            
+                 ]
 
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
@@ -204,17 +246,8 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                                  ||| wideAccordion
 
 
-myWorkspaces    = [" 1 "," 2 "," 3 "," 4 "," 5 "," 6 "," 7 "," 8 "," 9 "]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
-
-myClickableWorkspaces :: [String]
-myClickableWorkspaces = clickable . (map xmobarEscape)
-           -- $ [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-           $ [" dev ", " www ", " sys ", " doc ", " vbox ", " chat ", " mus ", " vid ", " gfx "]
-    where
-        clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                  (i,ws) <- zip [1..9] l,
-                  let n = i ]
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
     where i = fromJust $ M.lookup ws myWorkspaceIndices
@@ -226,7 +259,7 @@ myKeys =
     [ ("M-q", spawn "xmonad --recompile;xmonad --restart;killall xmobar")         -- Restarts xmonad
     , ("M-S-q", io exitSuccess) --quits xmonad
 
-    , ("M-p", spawn "dmenu_run") --starts dmenu
+    , ("M-p", spawn "dmenu_run -fn 'xft:Ubuntu mono:size=12:antialias=true:hinting=true'") --starts dmenu
 
     , ("M-<Return>", spawn (myTerminal)) --starts terminal
     , ("M-b", spawn (myBrowser)) --starts browser
@@ -242,6 +275,10 @@ myKeys =
     , ("C-M1-k", incWindowSpacing 4)         -- Increase window spacing
     , ("C-M1-h", decScreenSpacing 4)         -- Decrease screen spacing
     , ("C-M1-l", incScreenSpacing 4)         -- Increase screen spacing
+
+    , ("C-g g", spawnSelected' myAppGrid)                 -- grid select favorite apps
+    , ("C-g t", goToSelected $ mygridConfig myColorizer)  -- goto selected window
+    , ("C-g b", bringSelected $ mygridConfig myColorizer) -- bring selected window
 
     , ("M-m", windows W.focusMaster)  -- Move focus to the master window
     , ("M-j", windows W.focusDown)    -- Move focus to the next window
@@ -311,10 +348,10 @@ main = do
               { ppOutput = \x -> hPutStrLn xmproc x                        -- xmobar on monitor 3
               , ppCurrent = xmobarColor "#c792ea" "" . wrap "[" "]"         -- Current workspace
               , ppVisible = xmobarColor "#c792ea" "" . clickable              -- Visible but not current workspace
-              , ppHidden = xmobarColor "#82AAFF" "" . wrap " " " " . clickable -- Hidden workspaces
+              , ppHidden = xmobarColor "#c792ea" "" . wrap "" "" . clickable -- Hidden workspaces
               , ppHiddenNoWindows = xmobarColor "#82AAFF" ""  . clickable     -- Hidden workspaces (no windows)
-              , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
-              , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
+              , ppTitle = xmobarColor "#82AAFF" "" . shorten 60               -- Title of active window
+              , ppSep =  "<fc=#ffffff> <fn=1>|</fn> </fc>"                    -- Separator character
               , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
               , ppExtras  = [windowCount]                                     -- # of windows current workspace
               , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]                    -- order of things in xmobar
