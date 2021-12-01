@@ -15,10 +15,11 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Date "%a %b %_d %I:%M:%S" "date" 10
-                    , Run UnsafeStdinReader
+       , commands = [ Run Date "%a %b%_d %I:%M:%S" "date" 10
+                    , Run Com "/home/alec/.local/bin/pacupdate" [] "pacupdate" 36000
+                     , Run UnsafeStdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#ee9a00>%date%</fc><fc=#ffffff> |</fc>{"
+       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#ee9a00>%date%</fc><fc=#ffffff> |</fc>{%pacupdate%"
        }

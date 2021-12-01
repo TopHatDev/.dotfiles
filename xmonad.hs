@@ -257,7 +257,7 @@ clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
 myKeys :: [(String, X ())]
 myKeys =
     -- [ ("M-C-r", spawn "xmonad --recompile")       -- Recompiles xmonad
-    [ ("M-q", spawn "xmonad --recompile;xmonad --restart;killall xmobar")         -- Restarts xmonad
+    [ ("M-q", spawn "xmonad --recompile;killall xmobar;xmonad --restart")         -- Restarts xmonad
     , ("M-S-q", io exitSuccess) --quits xmonad
 
     , ("M-p", spawn "dmenu_run -fn 'xft:Ubuntu mono:size=12:antialias=true:hinting=true'") --starts dmenu
