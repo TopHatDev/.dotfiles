@@ -131,6 +131,7 @@ spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
 
 myAppGrid = [ ("Audacity", "audacity")
             , ("Discord", "discord")
+            , ("Spotify", "spotify")
             , ("Brave", "brave")
             , ("OBS", "obs")
             , ("Steam", "steam")
