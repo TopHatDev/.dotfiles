@@ -16,10 +16,9 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
        , allDesktops = True
        , overrideRedirect = True
        , commands = [ Run Date "%a %b %_d %I:%M:%S" "date" 10
-                    , Run Com "sh" ["-c", "checkupdates | wc -l"] "checkupdates" 3600
                     , Run UnsafeStdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}{<fc=#ffffff> | </fc>%checkupdates% Updates<fc=#ffffff> | </fc><fc=#ee9a00>%date%</fc>"
+       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#ee9a00>%date%</fc><fc=#ffffff> |</fc>{"
        }
