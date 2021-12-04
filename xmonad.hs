@@ -78,6 +78,9 @@ myTerminal = "alacritty"    -- Sets default terminal
 myBrowser :: String
 myBrowser = "brave "
 
+mySurf :: String
+mySurf = "surf "
+
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
@@ -264,6 +267,8 @@ myKeys =
 
     , ("M-<Return>", spawn (myTerminal)) --starts terminal
     , ("M-b", spawn (myBrowser)) --starts browser
+    , ("M-S-b", spawn (myBrowser ++ "https://www.suckless.org/s")) --starts browser to 
+    , ("M-s", spawn (mySurf ++ "startpage.com"))
 
     , ("M-S-c", kill1)     -- Kill the currently focused client
     , ("M-S-a", killAll)   -- Kill all windows on current workspace
