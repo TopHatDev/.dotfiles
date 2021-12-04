@@ -267,7 +267,7 @@ myKeys =
 
     , ("M-<Return>", spawn (myTerminal)) --starts terminal
     , ("M-b", spawn (myBrowser)) --starts browser
-    , ("M-S-b", spawn (myBrowser ++ "https://www.suckless.org/s")) --starts browser to 
+    , ("M-S-b", spawn (myBrowser ++ "https://www.suckless.org/")) --starts browser to 
     , ("M-s", spawn (mySurf ++ "startpage.com"))
 
     , ("M-S-c", kill1)     -- Kill the currently focused client
