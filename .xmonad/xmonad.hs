@@ -100,6 +100,7 @@ myStartupHook :: X ()
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom &"
+    spawnOnce "fxitx -d &"
 
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer = colorRangeFromClassName
