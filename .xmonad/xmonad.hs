@@ -100,7 +100,7 @@ myStartupHook :: X ()
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom &"
-    spawnOnce "fxitx -d &"
+    spawnOnce "gnome-keyring-deamon --start &"
 
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer = colorRangeFromClassName
@@ -135,13 +135,14 @@ spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
 
 myAppGrid = [ ("Audacity", "audacity")
             , ("Discord", "discord")
+            , ("Configs", "code /home/alec/.dotfiles")
+            , ("VScode", "code")
             , ("Spotify", "spotify")
             , ("Brave", "brave")
             , ("PhotoQT", "photoqt")
             , ("OBS", "obs")
             , ("Steam", "steam")
             , ("Minecraft", "minecraft-launcher")
-            , ("VScode", "code")
             , ("Godot-3.4", "godot-3.4")
             
                  ]
@@ -269,6 +270,7 @@ myKeys =
 
     , ("M-<Return>", spawn (myTerminal)) --starts terminal
     , ("M-b", spawn (myBrowser)) --starts browser
+    , ("M-l", spawn (myBrowser ++ "https://www.youtube.com/watch?v=5qap5aO4i9A"))
     , ("M-S-b", spawn (myBrowser ++ "https://www.suckless.org/")) --starts browser to 
     , ("M-s", spawn (mySurf ++ "startpage.com"))
 
