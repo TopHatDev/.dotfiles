@@ -143,7 +143,7 @@ myAppGrid = [ ("Audacity", "audacity")
             , ("OBS", "obs")
             , ("Steam", "steam")
             , ("Minecraft", "minecraft-launcher")
-            , ("Godot-3.4", "godot-3.4")
+            , ("Godot", "godot")
             
                  ]
 
