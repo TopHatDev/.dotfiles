@@ -133,8 +133,7 @@ spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
                    , gs_font         = myFont
                    }
 
-myAppGrid = [ ("Audacity", "audacity")
-            , ("Discord", "discord")
+myAppGrid = [ ("Discord", "discord")
             , ("Configs", "code /home/alec/.dotfiles")
             , ("VScode", "code")
             , ("Spotify", "spotify")
