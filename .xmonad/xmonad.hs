@@ -101,6 +101,7 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom &"
     spawnOnce "gnome-keyring-deamon --start &"
+    setWMName "LG3D"
 
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer = colorRangeFromClassName
@@ -265,12 +266,12 @@ myKeys =
     [ ("M-q", spawn "xmonad --recompile;killall xmobar;xmonad --restart")         -- Restarts xmonad
     , ("M-S-q", io exitSuccess) --quits xmonad
 
-    , ("M-p", spawn "dmenu_run -fn 'xft:Ubuntu mono:size=12:antialias=true:hinting=true'") --starts dmenu
+    , ("M-p", spawn "dmenu_run -h 21 -fn 'xft:Ubuntu mono:antialias=true:hinting=true'") --starts dmenu
 
     , ("M-<Return>", spawn (myTerminal)) --starts terminal
     , ("M-b", spawn (myBrowser)) --starts browser
     , ("M-S-b", spawn (myBrowser ++ "https://www.suckless.org/")) --starts browser to 
-    , ("M-l", spawn (mySurf ++ "https://www.youtube.com/watch?v=5qap5aO4i9A"))
+    , ("M-S-l", spawn (myBrowser ++ "https://www.youtube.com/watch?v=5qap5aO4i9A"))
     , ("M-s", spawn (mySurf ++ "startpage.com"))
 
     , ("M-S-c", kill1)     -- Kill the currently focused client
@@ -302,23 +303,6 @@ myKeys =
     , ("M-<Tab>", sendMessage NextLayout)           -- Switch to next layout
     , ("M-<Space>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
 
-    ]
-
--- Mouse bindings: default actions bound to mouse events
---
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-    -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster))
-
-    -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
-
-    -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
-                                       >> windows W.shiftMaster))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
 myManageHook = composeAll
