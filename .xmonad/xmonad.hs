@@ -266,7 +266,7 @@ myKeys =
     [ ("M-q", spawn "xmonad --recompile;killall xmobar;xmonad --restart")         -- Restarts xmonad
     , ("M-S-q", io exitSuccess) --quits xmonad
 
-    , ("M-p", spawn "dmenu_run -h 21 -fn 'xft:Ubuntu mono:antialias=true:hinting=true'") --starts dmenu
+    , ("M-p", spawn "dmenu_run -h 22 -fn 'xft:Ubuntu mono:size=11:antialias=true:hinting=true'") --starts dmenu
 
     , ("M-<Return>", spawn (myTerminal)) --starts terminal
     , ("M-b", spawn (myBrowser)) --starts browser
