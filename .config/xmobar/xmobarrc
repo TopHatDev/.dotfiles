@@ -24,5 +24,5 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#ee9a00>%date%</fc><fc=#ffffff> |</fc>{%kbd%<fc=#ffffff> | </fc>%pacupdate%"
+       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#4d86ff>%date%</fc><fc=#ffffff> |</fc>{%kbd%<fc=#ffffff> | </fc>%pacupdate%"
        }
