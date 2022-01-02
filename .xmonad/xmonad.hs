@@ -18,9 +18,8 @@ import qualified XMonad.Actions.Search as S
 
     -- Data
 import Data.Char (isSpace, toUpper)
-import Data.Maybe (fromJust)
+import Data.Maybe (fromJust, isJust)
 import Data.Monoid
-import Data.Maybe (isJust)
 import Data.Tree
 import qualified Data.Map as M
 
@@ -110,7 +109,7 @@ myColorizer = colorRangeFromClassName
                   (0xc7,0x92,0xea) -- active bg
                   (0xc0,0xa7,0x9a) -- inactive fg
                   (0x28,0x2c,0x40) -- active fg
-                  
+
 
 -- gridSelect menu layout
 mygridConfig :: p -> GSConfig Window
@@ -144,7 +143,7 @@ myAppGrid = [ ("Discord", "discord")
             , ("Steam", "steam")
             , ("Minecraft", "minecraft-launcher")
             , ("Godot", "godot")
-            
+
                  ]
 
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
@@ -268,8 +267,8 @@ myKeys =
 
     , ("M-p", spawn "dmenu_run -h 22 -fn 'xft:Ubuntu mono:size=11:antialias=true:hinting=true'") --starts dmenu
 
-    , ("M-<Return>", spawn (myTerminal)) --starts terminal
-    , ("M-b", spawn (myBrowser)) --starts browser
+    , ("M-<Return>", spawn myTerminal) --starts terminal
+    , ("M-b", spawn myBrowser) --starts browser
     , ("M-S-b", spawn (myBrowser ++ "https://www.suckless.org/")) --starts browser to 
     , ("M-S-l", spawn (myBrowser ++ "https://www.youtube.com/watch?v=5qap5aO4i9A"))
     , ("M-s", spawn (mySurf ++ "startpage.com"))
@@ -327,7 +326,7 @@ main = do
         , focusedBorderColor = myFocusColor
         , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
               -- the following variables beginning with 'pp' are settings for xmobar.
-              { ppOutput = \x -> hPutStrLn xmproc x                        -- xmobar on monitor 3
+              { ppOutput = hPutStrLn xmproc                        -- xmobar
               , ppCurrent = xmobarColor "#c792ea" "" . wrap "[" "]"         -- Current workspace
               , ppVisible = xmobarColor "#c792ea" "" . clickable              -- Visible but not current workspace
               , ppHidden = xmobarColor "#c792ea" "" . wrap "" "" . clickable -- Hidden workspaces
