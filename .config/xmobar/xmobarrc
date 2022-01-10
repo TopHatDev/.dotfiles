@@ -15,7 +15,7 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Date "%a %b%_d %I:%M:%S" "date" 10
+       , commands = [ Run Date "%a %b %_d %I:%M:%S" "date" 10
                             -- cpu core temperature monitor
                      , Run Com "/home/alec/.local/bin/pacupdate" [] "pacupdate" 1300
                      , Run Kbd [ ("us"         , "US")
