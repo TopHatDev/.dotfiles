@@ -16,13 +16,14 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
        , allDesktops = True
        , overrideRedirect = True
        , commands = [ Run Date "%a %b%_d %I:%M:%S" "date" 10
-                    , Run Com "/home/alec/.local/bin/pacupdate" [] "pacupdate" 1300
-                    , Run Kbd [ ("us"         , "US")
-                              , ("cn"         , "CH")
-                              ]
-                    , Run UnsafeStdinReader
-                    ]
+                            -- cpu core temperature monitor
+                     , Run Com "/home/alec/.local/bin/pacupdate" [] "pacupdate" 1300
+                     , Run Kbd [ ("us"         , "US")
+                            , ("cn"         , "CH")
+                     ]
+                     , Run UnsafeStdinReader
+                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <fc=#82AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#4d86ff>%date%</fc><fc=#ffffff> |</fc>{%kbd%<fc=#ffffff> | </fc>%pacupdate%"
+       , template = " <fc=#81AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#4d86ff>%date%</fc> <fc=#ffffff> |</fc>{<fc=#ffffff> | </fc>%kbd%<fc=#ffffff> | </fc>%pacupdate%"
        }

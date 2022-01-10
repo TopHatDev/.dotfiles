@@ -302,11 +302,22 @@ myKeys =
     , ("M-<Tab>", sendMessage NextLayout)           -- Switch to next layout
     , ("M-<Space>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
 
+    , ("M-S-<Up>", sendMessage (IncMasterN 1))      -- Increase # of clients master pane
+    , ("M-S-<Down>", sendMessage (IncMasterN (-1))) -- Decrease # of clients master pane
+    , ("M-C-<Up>", increaseLimit)                   -- Increase # of windows
+    , ("M-C-<Down>", decreaseLimit)                 -- Decrease # of windows
+
+    , ("M-h", sendMessage Shrink)                   -- Shrink horiz window width
+    , ("M-l", sendMessage Expand)                   -- Expand horiz window width
+    , ("M-M1-j", sendMessage MirrorShrink)          -- Shrink vert window width
+    , ("M-M1-k", sendMessage MirrorExpand)          -- Expand vert window width
+
     ]
 
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "Godot"          --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
