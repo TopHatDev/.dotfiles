@@ -1,4 +1,4 @@
-#!/bin/sh
+!/bin/sh
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -41,5 +41,5 @@ export XMODIFIERS='@im=fcitx'
 
 nitrogen --restore &
 picom &
-exec xmonad --recompile
+exec xmonad
 
