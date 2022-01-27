@@ -6,7 +6,7 @@ gtk_theme_variant: true
 
 #Window
 window:
-  opacity: 0.35
+  opacity: 0.5
 
 
 # Colors

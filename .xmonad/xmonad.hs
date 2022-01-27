@@ -268,6 +268,7 @@ myKeys =
     , ("M-p", spawn "dmenu_run -h 22 -fn 'xft:Ubuntu mono:size=11:antialias=true:hinting=true'") --starts dmenu
 
     , ("M-<Return>", spawn myTerminal) --starts terminal
+    , ("M-S-p", spawn (myTerminal ++ " -e bpytop"))
     , ("M-b", spawn myBrowser) --starts browser
     , ("M-S-b", spawn (myBrowser ++ "https://www.suckless.org/")) --starts browser to 
     , ("M-S-l", spawn (myBrowser ++ "https://www.youtube.com/watch?v=5qap5aO4i9A"))
