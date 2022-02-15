@@ -6,15 +6,15 @@ gtk_theme_variant: true
 
 #Window
 window:
-  opacity: 0.0
+  opacity: 0.5
 
 
 # Colors
 colors:
   # Default colors
   primary:
-    background:        '#00113d'
-    foreground:        '#7b20b3'
+    background:        '#111111'
+    foreground:        '#af2eff'
     bright_foreground: '#eeeeee'
 
   # Cursor colors
