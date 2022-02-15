@@ -1,0 +1,24 @@
+Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
+       , additionalFonts = []
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "#82AAFF"
+       , alpha = 120
+       , position = Top
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Date "%a %b %_d %I:%M:%S" "date" 10
+                     , Run UnsafeStdinReader
+                     ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " <fc=#81AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#4d86ff>%date%</fc> <fc=#ffffff> |</fc>{"
+       }
