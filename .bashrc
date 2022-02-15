@@ -15,3 +15,4 @@ fi
 
 PATH="$HOME/.local/bin${PATH:+:${PATH}}"  # adding .local/bin to $PATH
 XDG_CONFIG_HOME='/home/alec/.config'
+

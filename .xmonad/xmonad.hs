@@ -324,7 +324,8 @@ myManageHook = composeAll
 
 main :: IO ()
 main = do
-    xmproc <- spawnPipe "xmobar $HOME/.config/xmobar/xmobarrc"
+    xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc"
+    xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc"
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
         , handleEventHook    = docksEventHook
@@ -338,9 +339,10 @@ main = do
         , focusedBorderColor = myFocusColor
         , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
               -- the following variables beginning with 'pp' are settings for xmobar.
-              { ppOutput = hPutStrLn xmproc                        -- xmobar
+              { ppOutput = \x -> hPutStrLn xmproc0 x   -- xmobar on monitor 1
+                              >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
               , ppCurrent = xmobarColor "#c792ea" "" . wrap "[" "]"         -- Current workspace
-              , ppVisible = xmobarColor "#c792ea" "" . clickable              -- Visible but not current workspace
+              , ppVisible = xmobarColor "#c792ea" "" . wrap "{" "}" . clickable-- Visible but not current workspace
               , ppHidden = xmobarColor "#c792ea" "" . wrap "" "" . clickable -- Hidden workspaces
               , ppHiddenNoWindows = xmobarColor "#82AAFF" ""  . clickable     -- Hidden workspaces (no windows)
               , ppTitle = xmobarColor "#82AAFF" "" . shorten 60               -- Title of active window
