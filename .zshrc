@@ -1,4 +1,3 @@
-
 #-----------------------------
 #Source some stuff
 #-----------------------------
@@ -6,10 +5,11 @@ if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.
   . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-if [ -e /home/alec/.bashconfig/colorSchemeShow.sh ]
-then
-	bash /home/alec/.bashconfig/colorSchemeShow.sh
-fi
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+colorscript random
 
 BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
@@ -24,70 +24,118 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 
-
-# Comp Stuff
-zmodload zsh/complist
+#------------------------------
+# Autoload stuff
+#------------------------------
 autoload -Uz promptinit
 autoload -Uz compinit
+zmodload zsh/complist
 compinit
 promptinit
 
-
-plugins=(
-	zsh-autosuggestions
-)
-
 zstyle ':completion:*' menu select
-zstyle zstyle ':completion::complete:*' gain-privileges 1
-zstyle ':prompt:grml:*:items:user' pre '%F{cyan}'
+#------------------------------
+#Key binds
+#------------------------------
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -g -A key
 
-zstyle ':prompt:grml:*:items:path' pre '%F{6}┃%K{6}%F{black} '
-zstyle ':prompt:grml:*:items:path' post '%k%b%F{6}│%f '
+key[Home]="${terminfo[khome]}"
+key[End]="${terminfo[kend]}"
+key[Insert]="${terminfo[kich1]}"
+key[Backspace]="${terminfo[kbs]}"
+key[Delete]="${terminfo[kdch1]}"
+key[Up]="${terminfo[kcuu1]}"
+key[Down]="${terminfo[kcud1]}"
+key[Left]="${terminfo[kcub1]}"
+key[Right]="${terminfo[kcuf1]}"
+key[PageUp]="${terminfo[kpp]}"
+key[PageDown]="${terminfo[knp]}"
+key[Shift-Tab]="${terminfo[kcbt]}"
+key[Control-Left]="${terminfo[kLFT5]}"
+key[Control-Right]="${terminfo[kRIT5]}"
 
-zstyle ':prompt:grml:*:items:vcs' pre '%F{13}%f%K{13}'
+# setup key accordingly
+[[ -n "${key[Home]}"      ]] && bindkey -- "${key[Home]}"       beginning-of-line
+[[ -n "${key[End]}"       ]] && bindkey -- "${key[End]}"        end-of-line
+[[ -n "${key[Insert]}"    ]] && bindkey -- "${key[Insert]}"     overwrite-mode
+[[ -n "${key[Backspace]}" ]] && bindkey -- "${key[Backspace]}"  backward-delete-char
+[[ -n "${key[Delete]}"    ]] && bindkey -- "${key[Delete]}"     delete-char
+[[ -n "${key[Up]}"        ]] && bindkey -- "${key[Up]}"         up-line-or-history
+[[ -n "${key[Down]}"      ]] && bindkey -- "${key[Down]}"       down-line-or-history
+[[ -n "${key[Left]}"      ]] && bindkey -- "${key[Left]}"       backward-char
+[[ -n "${key[Right]}"     ]] && bindkey -- "${key[Right]}"      forward-char
+[[ -n "${key[PageUp]}"    ]] && bindkey -- "${key[PageUp]}"     beginning-of-buffer-or-history
+[[ -n "${key[PageDown]}"  ]] && bindkey -- "${key[PageDown]}"   end-of-buffer-or-history
+[[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}" forward-word
 
-zstyle ':prompt:grml:*:items:time' pre '%F{3}%F{black}%K{3}'
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+	autoload -Uz add-zle-hook-widget
+	function zle_application_mode_start { echoti smkx }
+	function zle_application_mode_stop { echoti rmkx }
+	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+fi
 
-zstyle ':prompt:grml:*:items:host' pre '%F{6}%F{black}%K{6}'
-zstyle ':prompt:grml:*:items:host' post '%k%F{6}┃%f%b'
-
-zstyle ':prompt:grml:left:setup' items change-root path
-zstyle ':prompt:grml:right:setup' items rc vcs time host
-
-# This will set the default prompt to the walters theme
-prompt fade magenta
-
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
+#-------------------
+#Path
+#-------------------
 typeset -U PATH path
-path=("$HOME/.local/bin" /other/things/in/path "$path[@]")
+path=("$HOME/.local/bin" "$path[@]")
 export PATH
 
-#setprompt() {
-#	setopt prompt_subst
-#
-#	if [[ -n "$SSH_CLIENT"  ||  -n "$SSH2_CLIENT" ]]; then 
-#		p_host='%F{yellow}%M%f'
-#	else
-#			p_host='%F{green}%M%f'
-#	fi
-#
-#		PS1=${(j::Q)${(Z:Cn:):-$'
-#			%F{cyan}[%f
-#			%(!.%F{red}%n%f.%F{green}%n%f)
-#			%F{cyan}@%f
-#			${p_host}
-#			%F{cyan}][%f
-#			%F{blue}%~%f
-#			%F{cyan}]%f
-#			%(!.%F{red}%#%f.%F{green}%#%f)
-#			" "
-#			'}}
-#
-#		PS2=$'%_>'
-#		RPROMPT=$'${vcs_info_msg_0_}'
-#}
-#setprompt
+#---------------------
+#Alias
+#---------------------
 
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+function extract {
+	if [ -z "$1" ]; then
+	    # display usage if no parameters given
+	    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+	    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+	else
+		for n in "$@"
+		do
+		if [ -f "$n" ] ; then
+			case "${n%,}" in
+				*.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
+							tar xvf "$n"       ;;
+				*.lzma)      unlzma ./"$n"      ;;
+				*.bz2)       bunzip2 ./"$n"     ;;
+				*.cbr|*.rar)       unrar x -ad ./"$n" ;;
+				*.gz)        gunzip ./"$n"      ;;
+				*.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
+				*.z)         uncompress ./"$n"  ;;
+				*.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+							7z x ./"$n"        ;;
+				*.xz)        unxz ./"$n"        ;;
+				*.exe)       cabextract ./"$n"  ;;
+				*.cpio)      cpio -id < ./"$n"  ;;
+				*.cba|*.ace)      unace x ./"$n"      ;;
+				*)
+                         echo "extract: '$n' - unknown archive method"
+                         return 1
+                         ;;
+  	        esac
+		else
+			echo "'$n' - file does not exist"
+			return 1
+		fi
+	done
+fi
+}
+
+
+
+#------------------------------
+# PowerLevle10K Stuff
+#------------------------------
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+	  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
