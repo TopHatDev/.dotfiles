@@ -1,5 +1,6 @@
 Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
-       , additionalFonts = []
+       , additionalFonts = [ "xft:Mononoki:pixelsize=12:antialias=true:hinting=true"
+       ]
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
@@ -17,7 +18,8 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
        , overrideRedirect = True
        , commands = [ Run Date "%a %b %_d %I:%M:%S" "date" 10
                             -- cpu core temperature monitor
-                     , Run Com "/home/alec/.local/bin/pacupdate" [] "pacupdate" 10
+                     , Run Cpu ["-t", "cpu:(<total>%)","-H","50","--high","red"] 20
+                     , Run Com "/home/alec/.local/bin/pacupdate" [] "pacupdate" 36000
                      , Run Kbd [ ("us"         , "US")
                             , ("cn"         , "CH")
                      ]
@@ -25,5 +27,5 @@ Config { font = "xft:Ubuntu mono:size=12:antialias=true:hinting=true"
                      ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <fc=#81AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#4d86ff>%date%</fc> <fc=#ffffff> |</fc>{<fc=#ffffff> | </fc>%kbd%<fc=#ffffff> | </fc>%pacupdate%"
+       , template = " <fc=#81AAFF>%UnsafeStdinReader%</fc>}<fc=#ffffff>| </fc><fc=#4d86ff>%date%</fc> <fc=#ffffff> |</fc>{%cpu%<fc=#ffffff> | </fc>%kbd%<fc=#ffffff> | </fc>%pacupdate%"
        }
