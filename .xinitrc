@@ -34,7 +34,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-xrdb -I$HOME ~/.Xresources
+#xrdb -I$HOME ~/.Xresources
 
 export GTK_IM_MODULE='fcitx'
 export QT_IM_MODULE='fcitx'
@@ -42,7 +42,7 @@ export XMODIFIERS='@im=fcitx'
 
 nitrogen --restore &
 picom &
-exec xmonad
+exec xmonad --recompile
 
 
 
