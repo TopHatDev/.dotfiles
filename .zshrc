@@ -86,6 +86,11 @@ fi
 typeset -U PATH path
 path=("$HOME/.local/bin" "$path[@]")
 export PATH
+typeset -U XDG_CONFIG_HOME xdg_config_home
+xdg_config_home=("$HOME/.config" "$xsg_config_home[@]")
+export XDG_CONFIG_HOME
+
+[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx --vt1
 
 #---------------------
 #Alias

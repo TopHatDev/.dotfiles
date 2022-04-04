@@ -8,10 +8,10 @@ gtk_theme_variant: true
 window:
   opacity: 0.5
 
-font:
-  size: 10.0
-  normal:
-      family: "MesloLGS NF"
+    #font:
+    #size: 10.0
+    #normal:
+    #family: "MesloLGS NF"
 
 # Colors
 colors:
