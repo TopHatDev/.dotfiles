@@ -138,7 +138,6 @@ myAppGrid = [ ("Discord", "discord")
             , ("VScode", "code")
             , ("Spotify", "spotify")
             , ("Brave", "brave")
-            , ("PhotoQT", "photoqt")
             , ("OBS", "obs")
             , ("Steam", "steam")
             , ("Minecraft", "minecraft-launcher")
@@ -255,8 +254,12 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
 myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
-clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
-    where i = fromJust $ M.lookup ws myWorkspaceIndices
+clickable :: [(WorkspaceId, Int)] -> WorkspaceId -> String
+clickable ws w = fromMaybe w $ (\x -> xmobarAction ("xdotool key=super+" ++ show x) "1" w) <$> lookup w ws
+
+-- Old way of doing this
+-- clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
+--     where i = fromJust $ M.lookup ws myWorkspaceIndices
 
 --Key Bindings
 myKeys :: [(String, X ())]
@@ -341,9 +344,9 @@ main = do
               -- the following variables beginning with 'pp' are settings for xmobar.
               { ppOutput = \x -> hPutStrLn xmproc0 x   -- xmobar on monitor 1
                               >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
-              , ppCurrent = xmobarColor "#c792ea" "" . wrap "[" "]"         -- Current workspace
-              , ppVisible = xmobarColor "#e3762d" "" . clickable-- Visible but not current workspace
-              , ppHidden = xmobarColor "#c792ea" "" . wrap "" "" . clickable -- Hidden workspaces
+              , ppCurrent = xmobarColor "#c792ea" "" . wrap "[" "]"           -- Current workspace
+              , ppVisible = xmobarColor "#e3762d" "" . clickable              -- Visible but not current workspace
+              , ppHidden = xmobarColor "#c792ea" "" . wrap "" "" . clickable (zip myWs [1..])  -- Hidden workspaces
               , ppHiddenNoWindows = xmobarColor "#82AAFF" ""  . clickable     -- Hidden workspaces (no windows)
               , ppTitle = xmobarColor "#82AAFF" "" . shorten 60               -- Title of active window
               , ppSep =  "<fc=#ffffff> <fn=1>|</fn> </fc>"                    -- Separator character
@@ -352,3 +355,6 @@ main = do
               , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]                    -- order of things in xmobar
               }
         } `additionalKeysP` myKeys
+
+
+
