@@ -40,9 +40,10 @@ export GTK_IM_MODULE='fcitx'
 export QT_IM_MODULE='fcitx'
 export XMODIFIERS='@im=fcitx'
 
+numlockx &
 nitrogen --restore &
 picom &
-exec xmonad --recompile
+exec xmonad
 
 
 
