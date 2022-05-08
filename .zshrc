@@ -84,7 +84,7 @@ fi
 #Path
 #-------------------
 typeset -U PATH path
-path=("$HOME/.local/bin" "$path[@]")
+path=("$HOME/.local/bin:$HOME/.emacs.d/bin" "$path[@]")
 export PATH
 typeset -U XDG_CONFIG_HOME xdg_config_home
 xdg_config_home=("$HOME/.config" "$xsg_config_home[@]")
