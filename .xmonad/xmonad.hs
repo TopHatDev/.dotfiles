@@ -99,6 +99,8 @@ myStartupHook :: X ()
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom &"
+    spawnOnce "nm-applet"
+    spawnOnce "/usr/bin/emacs --daemon" -- emacs daemon for the emacsclient
     spawnOnce "gnome-keyring-deamon --start &"
     setWMName "LG3D"
 

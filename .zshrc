@@ -97,7 +97,6 @@ export XDG_CONFIG_HOME
 #---------------------
 alias unzip='extract'
 
-
 function extract {
 	if [ -z "$1" ]; then
 	    # display usage if no parameters given
